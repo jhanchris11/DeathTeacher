@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Fragment } from 'react';
+
 import './App.css';
+import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
+import { Layout } from 'antd';
+import Aside from './components/Layout/Aside';
+import Header from './components/Layout/Header'
+import Main from './pages/Main';
+import Questions from './pages/Questions';
+import Profile from './pages/Profile';
+import Chat from './components/Bot/Chat/Chat';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Fragment>
+        <Switch>
+          {/* <Route exact path='/chat' component={Chat} /> */}
+          <Layout className='cl-layout'>
+            <Aside />
+            <Layout>
+              <Header />
+              <Route exact path='/' component={Main} />
+              <Route exact path='/questions' component={Questions} />
+              <Route exact path='/profile' component={Profile} />
+            
+            </Layout>
+          </Layout>
+        </Switch>
+      </Fragment>
+    </Router>
   );
 }
 
