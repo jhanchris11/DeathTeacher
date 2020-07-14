@@ -12,9 +12,7 @@ const Profile = () => {
             <Content className='cl-content'>
                 <Breadcrumb seccionPerfil={seccionPerfil} />
                 <div className='cl-content-bg'>
-               
                         <Perfil />
-         
                 </div>
             </Content>
             <FooterMain />

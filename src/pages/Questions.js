@@ -11,7 +11,6 @@ const Questions = () => {
                 <Breadcrumb seccionPreguntas={seccionPreguntas} />
                 <div className='cl-content-bg'>
                     <p>Gaa</p>
-                    {/* <i class="fa fa-paper-plane-o" aria-hidden="true"></i> */}
                 </div>
             </Content>
             <FooterMain />
