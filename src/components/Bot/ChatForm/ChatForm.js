@@ -1,18 +1,61 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import './ChatForm.css'
-// import { AiOutlineSend } from '@ant-design/icons'
-const ChatForm = ({ setMessage }) => {
+import { teacherBot } from '../../../services/BotService'
+import { dateNow } from '../../../Helpers/DateNow'
+import { v4 as uuidv4 } from 'uuid';
+import ContextMessage from '../../Context/ContextMessage';
 
-    const [description, setDescription] = useState('')
+
+
+const ChatForm = () => {
+
+    const [description, setDescription] = useState({
+        question: '',
+    })
+
+    const { messageList, setMessageList, disableBot, setDisable } = useContext(ContextMessage)
+
+    useEffect(() => {
+        if (disableBot === false) {
+            getTeacherBot()
+            setDisable(true)
+        }
+    }, [messageList])
+
+
+    let getTeacherBot = async () => {
+        const { data } = await teacherBot(description)
+        console.log(data)
+        setDescription({
+            question: ''
+        })
+
+        data['id'] = uuidv4()
+
+        setMessageList([...messageList, ...[
+            data
+        ]])
+
+        //funcion de voz , pasarle la data
+    }
 
     const handlerInput = (e) => {
-        setDescription(e.target.value)
+        setDescription({
+            [e.target.name]: e.target.value
+        })
     }
-    
-    const handlerSubmit = (e) => {
+
+
+    const handlerSubmit = async (e) => {
         e.preventDefault()
-        setMessage(msg => [description, ...msg])
-        setDescription('')
+        setDisable(false)
+        setMessageList([...messageList, ...[{
+            id: uuidv4(),
+            type: 'message-row other-message',
+            message: description.question,
+            date: dateNow(),
+            bot: 'person'
+        }]])
     }
 
     return (
@@ -22,7 +65,8 @@ const ChatForm = ({ setMessage }) => {
                 <input
                     type="text"
                     placeholder="Escriba su mensaje"
-                    value={description}
+                    value={description.question}
+                    name='question'
                     onChange={handlerInput}
                 />
             </form>

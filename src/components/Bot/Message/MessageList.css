@@ -32,6 +32,10 @@
     grid-template-columns: 48px 1fr;
     grid-column-gap: 15px;
   }
+  /* .you-message .message-content {
+    grid-template-columns: 180px 1fr;
+    grid-column-gap: 15px;
+  } */
   
   .message-row img {
     border-radius: 100%;
