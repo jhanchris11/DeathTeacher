@@ -19,11 +19,6 @@
     font-size: 10px;
   }
   
-  /* body {
-    display: grid;
-     place-items: center center;
-  } */
-  
   ::-webkit-scrollbar {
     display: none;
   }
@@ -147,22 +142,21 @@ background-color: #b0a4b3;
 
  }
  .box-slider{
-
-  padding-top: 20px;
-  background-color: aqua;
-  border: 1px solid #246fa8;
-  text-align: center;
-  width: 400px;
-  height: 350px;
+    box-sizing: border-box;
+    background-color: floralwhite;
+    text-align: center;
+    width: 100%;
+    padding: 50px;
+    height: 100%;
 }
 .çl-slider{
   margin:10px 0px;
   background-color: dark;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 500px;
-  
+}
+
+.slick-slider {
+  height: inherit !important;
 }
 
 

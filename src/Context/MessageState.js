@@ -3,7 +3,7 @@ import React, { useReducer } from 'react'
 import contextMessage from './ContextMessage'
 import reducerMessage from './MessageReducer'
 import { v4 as uuidv4 } from 'uuid'
-import { SET_MESSAGE_LIST, SET_DISABLE } from './Type';
+import { SET_MESSAGE_LIST, SET_DISABLE, SET_INPUT } from './Type';
 import { dateNow } from '../Helpers/DateNow';
 
 /*State global , no va a cambiar , almacenar la data del estado */
@@ -18,7 +18,8 @@ function MessageState(props) {
             date: dateNow() ,
             bot:'bot1'
         }],
-        disableBot: true
+        disableBot: true,
+        searchInput: ''
     }
 
     const [state, dispatch] = useReducer(reducerMessage, initialState);
@@ -37,6 +38,12 @@ function MessageState(props) {
         });
     }
 
+    const setSearchInput = input => {
+        dispatch({
+            type: SET_INPUT,
+            payload: input
+        });
+    }
 
     return (
         <contextMessage.Provider
@@ -44,7 +51,9 @@ function MessageState(props) {
                 messageList: state.messageList,
                 setMessageList,
                 disableBot: state.disableBot,
-                setDisable
+                setDisable,
+                searchInput: state.searchInput,
+                setSearchInput
             }}
         >
             {props.children}

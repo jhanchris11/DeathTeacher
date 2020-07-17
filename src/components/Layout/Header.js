@@ -10,8 +10,6 @@ const HeaderSecundario = () => {
 
     return (
         <Header className='cl-header'>
-            {/* <Title level={3} className='cl-header-title'>Death Teacher Bot</Title> */}
-            <Search />
             <HeadMenu />
         </Header>
     )
