@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, createContext } from 'react';
 
 import './App.css';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
@@ -8,13 +8,14 @@ import Header from './components/Layout/Header'
 import Main from './pages/Main';
 import Questions from './pages/Questions';
 import Profile from './pages/Profile';
-import MessageState from './components/Context/MessageState';
+import MessageState from './Context/MessageState';
 
 function App() {
   return (
     <MessageState>
       <Router>
         <Fragment>
+    
           <Layout className='cl-layout'>
             <Aside />
             <Layout>

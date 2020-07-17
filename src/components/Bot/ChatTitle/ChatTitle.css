@@ -1,4 +1,5 @@
 #chat-title {
+    width: 351.2px;
     display: grid;
     grid: 36px / 1fr 36px;
     align-content: center;

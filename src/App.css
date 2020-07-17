@@ -1,5 +1,6 @@
 
   @import '~antd/dist/antd.css';
+
     /*chat*/
   * {
     margin: 0;
@@ -20,9 +21,9 @@
   
   /* body {
     display: grid;
-    place-items: center center;
-  }
-   */
+     place-items: center center;
+  } */
+  
   ::-webkit-scrollbar {
     display: none;
   }
@@ -52,8 +53,7 @@
     padding: 24px;
     min-height: 560px;
   }
-  .Container-Stream{
-      width: 50%;
+  .box-stream{
       background-color: #fff;
       display: flex;
       justify-content: center;
@@ -111,8 +111,6 @@
   .menu-item-icon .anticon {
     font-size: 20px;
   }
-
-  
   .container {
     display: flex;
     flex-direction: column;
@@ -126,17 +124,69 @@
     cursor: pointer;
   }
 
+ .contenedor-chat{
+  width: 50%;
+ }
+ .contendor-stream{
+  width: 50%;
+ }
+ .box-player{
+   width: 400px;
+   height: 500px;
+   padding: 0px 20px;
+background-color: #b0a4b3;
+  }
+
+ .box-search{
+   padding: 15px 0px 15px 20px;
+
+   width: 30%;
+ }
+ .cl-search{
+   background: #fff;
+
+ }
+ .box-slider{
+
+  padding-top: 20px;
+  background-color: aqua;
+  border: 1px solid #246fa8;
+  text-align: center;
+  width: 400px;
+  height: 350px;
+}
+.çl-slider{
+  margin:10px 0px;
+  background-color: dark;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
   @media (max-width: 360px) {
-  
   .cl-content-bg{
     flex-wrap: wrap;
   }
-  
+
   #chat-container{
     min-width: 240px;
     margin-top: 40px;
   }
+  
   #chat-message-list{
     width: 240px;
   }

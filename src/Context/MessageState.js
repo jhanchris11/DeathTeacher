@@ -4,7 +4,7 @@ import contextMessage from './ContextMessage'
 import reducerMessage from './MessageReducer'
 import { v4 as uuidv4 } from 'uuid'
 import { SET_MESSAGE_LIST, SET_DISABLE } from './Type';
-import { dateNow } from '../../Helpers/DateNow';
+import { dateNow } from '../Helpers/DateNow';
 
 /*State global , no va a cambiar , almacenar la data del estado */
 function MessageState(props) {
