@@ -1,4 +1,4 @@
-const TOTAL_PARAGRAPHS = 8;
+const TOTAL_PARAGRAPHS = 4;
 
 //TODO: Refactor method
 export const separateSlider = subtopic => {
@@ -7,7 +7,7 @@ export const separateSlider = subtopic => {
   let paragrahs = subtopic.split(".");
   if (paragrahs.length > TOTAL_PARAGRAPHS) {
     paragrahs.map((paragrah, index) => {
-      if (count == TOTAL_PARAGRAPHS || paragrah.length == index + 1) {
+      if (count == TOTAL_PARAGRAPHS || paragrahs.length == (index + 1)) {
         tempArray.push(paragrahs.slice(index - count, index).join("."));
         count = 0;
       }
