@@ -4,6 +4,8 @@ import { teacherBot } from '../../../services/BotService'
 import { dateNow } from '../../../Helpers/DateNow'
 import { v4 as uuidv4 } from 'uuid';
 import ContextMessage from '../../../Context/ContextMessage';
+import { speechTextSlider } from '../../../Helpers/speechHelper';
+
 
 const ChatForm = () => {
 
@@ -12,6 +14,7 @@ const ChatForm = () => {
     })
 
     const { messageList, setMessageList, disableBot, setDisable } = useContext(ContextMessage)
+    const { beginAudio, finishAudio, setBeginAudio, setFinishAudio } = useContext(ContextMessage)
 
     useEffect(() => {
         if (disableBot === false) {
@@ -20,10 +23,24 @@ const ChatForm = () => {
         }
     }, [messageList])
 
+    useEffect(() => {
+        if (beginAudio) {
+            setBeginAudio(false)
+        }
+    }, [beginAudio])
+
+    useEffect(() => {
+        if (finishAudio) {
+            setFinishAudio(false)
+        }
+    }, [finishAudio])
 
     let getTeacherBot = async () => {
         const { data } = await teacherBot(description)
-        console.log(data)
+        setBeginAudio(true)
+        await speechTextSlider(data.message)
+        setFinishAudio(true)
+
         setDescription({
             question: ''
         })
@@ -33,7 +50,6 @@ const ChatForm = () => {
         setMessageList([...messageList, ...[
             data
         ]])
-
         //funcion de voz , pasarle la data
     }
 

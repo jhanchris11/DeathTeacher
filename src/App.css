@@ -134,6 +134,9 @@ html {
 
 .contenedor-chat {
   width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .contendor-stream {
   width: 50%;
@@ -160,10 +163,12 @@ html {
   height: inherit !important;
   width: 50% !important;
   margin-left: 100px !important;
+  /* max-height: 550px; */
 }
 
 .slick-track {
   padding-top: 20px !important;
+  height: 650px;
 }
 
 @media (max-width: 360px) {

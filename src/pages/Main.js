@@ -8,15 +8,15 @@ import Chat from "../components/Bot/Chat/Chat";
 import SearchT from "../components/Search/SearchT";
 import Topic from "../components/CarouselTopic/Topic";
 import ContextMessage from "../Context/ContextMessage";
-
+import {getTopicClass} from '../services/BotService'
 const { Content } = Layout;
 const Main = () => {
   const [seccionBot] = useState("Bot");
   const { searchInput } = useContext(ContextMessage);
-
-  useEffect(()=> {
+  const { finishClass } = useContext(ContextMessage)
+  useEffect(() => {
     window.speechSynthesis.cancel();
-  },[]);
+  }, []);
 
   return (
     <Fragment>
@@ -32,14 +32,18 @@ const Main = () => {
           </div>
         )}
 
-        <div className="cl-content-bg">
-          <div className="contendor-stream">
-            <Stream />
+        {searchInput != "" && (
+          <div className="cl-content-bg">
+            <div className="contendor-stream">
+              {/* {finishClass && ( */}
+              <Stream />
+              {/* )} */}
+            </div>
+            <div className="contenedor-chat">
+              <Chat />
+            </div>
           </div>
-          <div className="contenedor-chat">
-            <Chat />
-          </div>
-        </div>
+        )}
       </Content>
       <FooterMain />
     </Fragment>
