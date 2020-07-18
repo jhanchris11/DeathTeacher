@@ -1,9 +1,9 @@
-import React from 'react'
-import Search from 'antd/lib/input/Search'
-// import classes from '*.module.css'
+import React from 'react';
+import Search from '../Layout/Search';
+
 const SearchT = () => {
     return (
-        <div className='box-search'>
+        <div style={{padding:"15px"}}>
             <Search />
         </div>
     )

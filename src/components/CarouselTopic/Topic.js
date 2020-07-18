@@ -1,44 +1,98 @@
-import React from 'react'
-import Slider from 'react-slick'
+import React, { useState, useEffect, Fragment } from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Topic = () => {
+import { getClass } from "./classJson";
+import { speechTextSlider } from "../../Helpers/speechHelper";
+import { separateSlider } from "../../Helpers/sliderHelper";
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
+import Stream from "../Stream/Stream";
+import "./TopicStyle.scss";
+
+const Topic = ({ topic }) => {
+  var slider;
+  const [carouselSubTopics, setSubTopics] = useState([]);
+  const [beginClass, setBeginClass] = useState("aboveOfSliders");
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+
+  useEffect(() => {
+    handleSliders();
+  }, [beginClass]);
+
+  useEffect(() => {
+    buildingCarousel();
+  }, []);
+
+  function next() {
+    slider.slickNext();
+  }
+
+  function previous() {
+    slider.slickPrev();
+  }
+
+  function handleSpeech() {
+    setBeginClass("belowOfSliders");
+  }
+
+  const buildingCarousel = () => {
+    let subTopics = [];
+    let topicJson = getClass();
+    Object.keys(topicJson).map(slider => {
+      let tempArray = separateSlider(topicJson[slider]);
+      tempArray.length > 0
+        ? tempArray.map(text => {
+            subTopics.push({ title: slider, content: text });
+          })
+        : subTopics.push({ title: slider, content: topicJson[slider] });
+    });
+    setSubTopics(subTopics);
+  };
+
+  const handleSliders = async () => {
+    for (let subtopic of carouselSubTopics) {
+      await speechTextSlider(subtopic.content);
+      window.speechSynthesis.cancel();
+      next();
     }
+  };
 
-    return (
-        <div className='box-slider' >
-            <h2> Topic</h2>
-            <Slider {...settings} >
-                <div>
-                    <h3>1</h3>
-                </div>
-                <div>
-                    <h3>2</h3>
-                </div>
-                <div>
-                    <h3>3</h3>
-                </div>
-                <div>
-                    <h3>4</h3>
-                </div>
-                <div>
-                    <h3>5</h3>
-                </div>
-                <div>
-                    <h3>6</h3>
-                </div>
+  return (
+    <Fragment>
+      <h3 className="topicTitle">La clase de hoy es sobre : {topic}</h3>
+      <div className="box-slider">
+        <Fragment>
+          <div className="leftContainer">
+            <Slider ref={c => (slider = c)} {...settings}>
+              {carouselSubTopics &&
+                carouselSubTopics.map(slider => (
+                  <div className="subTopic">
+                    <h3 className="subTopicTitle">{slider.title}</h3>
+                    <p className="sutbopicContent">{slider.content}</p>
+                  </div>
+                ))}
             </Slider>
-        </div>
+          </div>
+          <div className="rigthContainer">
+            <Stream />
+          </div>
+        </Fragment>
+      </div>
+      <div className={`customSlider box-slider ${beginClass}`}>
+        <button className="beginClassButton" onClick={handleSpeech}>
+          Empezar clase
+        </button>
+      </div>
+    </Fragment>
+  );
+};
 
-    )
-}
-
-export default Topic
+export default Topic;
