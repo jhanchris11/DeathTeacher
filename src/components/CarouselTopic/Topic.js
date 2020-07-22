@@ -1,15 +1,13 @@
 import React, { useState, useEffect, Fragment, useContext } from "react";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-import { getClass } from "./classJson";
 import { speechTextSlider } from "../../Helpers/speechHelper";
 import { separateSlider } from "../../Helpers/sliderHelper";
-
 import Stream from "../Stream/Stream";
-import "./TopicStyle.scss";
 import ContextMessage from "../../Context/ContextMessage";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./TopicStyle.scss";
 
 const Topic = ({ topic }) => {
     var slider;
@@ -26,7 +24,7 @@ const Topic = ({ topic }) => {
     };
 
     useEffect(() => {
-        if (classText !== null){
+        if (classText !== null) {
             buildingCarousel(classText)
         }
     }, [classText])

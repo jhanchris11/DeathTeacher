@@ -1,4 +1,4 @@
-import React, { Fragment, createContext } from 'react';
+import React, { Fragment } from 'react';
 
 import './App.css';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
@@ -15,7 +15,7 @@ function App() {
     <MessageState>
       <Router>
         <Fragment>
-    
+
           <Layout className='cl-layout'>
             <Aside />
             <Layout>

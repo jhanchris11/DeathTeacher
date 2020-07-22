@@ -4,16 +4,14 @@ import FooterMain from "../components/Layout/Footer";
 import Breadcrumb from "../components/Layout/Content";
 import Stream from "../components/Stream/Stream";
 import Chat from "../components/Bot/Chat/Chat";
-// import Search from 'antd/lib/input/Search'
-import SearchT from "../components/Search/SearchT";
+import SearchT from "../components/Layout/Search";
 import Topic from "../components/CarouselTopic/Topic";
 import ContextMessage from "../Context/ContextMessage";
-import {getTopicClass} from '../services/BotService'
 const { Content } = Layout;
 const Main = () => {
   const [seccionBot] = useState("Bot");
   const { searchInput } = useContext(ContextMessage);
-  const { finishClass } = useContext(ContextMessage)
+  // const { finishClass } = useContext(ContextMessage)
   useEffect(() => {
     window.speechSynthesis.cancel();
   }, []);
@@ -26,13 +24,13 @@ const Main = () => {
           <SearchT />
         </div>
 
-        {searchInput != "" && (
+        {searchInput !== "" && (
           <div className="çl-slider">
             <Topic topic={searchInput} />
           </div>
         )}
 
-        {searchInput != "" && (
+        {searchInput !== "" && (
           <div className="cl-content-bg">
             <div className="contendor-stream">
               {/* {finishClass && ( */}

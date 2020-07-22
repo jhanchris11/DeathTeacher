@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import ContextMessage from "../../Context/ContextMessage";
-import { Button, Radio } from 'antd';
+import { Button } from 'antd';
 import { getTopicClass, getScrappingQuestion } from "../../services/BotService";
 
 const Search = () => {
@@ -27,7 +27,7 @@ const Search = () => {
   }
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <div style={{ display: "flex", justifyContent: "space-between", padding:"15px" }}>
       <div className="Search-Box">
         <SearchOutlined />
         <input

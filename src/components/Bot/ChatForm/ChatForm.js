@@ -6,15 +6,13 @@ import { v4 as uuidv4 } from 'uuid';
 import ContextMessage from '../../../Context/ContextMessage';
 import { speechTextSlider } from '../../../Helpers/speechHelper';
 
-
 const ChatForm = () => {
 
     const [description, setDescription] = useState({
         question: '',
     })
 
-    const { messageList, setMessageList, disableBot, setDisable } = useContext(ContextMessage)
-    const { beginAudio, finishAudio, setBeginAudio, setFinishAudio } = useContext(ContextMessage)
+    const { messageList, setMessageList, disableBot, setDisable, beginAudio, finishAudio, setBeginAudio, setFinishAudio } = useContext(ContextMessage)
 
     useEffect(() => {
         if (disableBot === false) {
