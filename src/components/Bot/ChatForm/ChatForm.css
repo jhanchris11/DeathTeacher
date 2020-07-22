@@ -15,7 +15,7 @@
     grid-area: chat-form;
     border-radius: 0 0 10px 0;
     border-top: 1px solid rgba(0,0,0,0.25);
-    padding-left: 42px;
+    padding-left: 22px;
     padding-right: 22px;
   }
   
@@ -26,4 +26,5 @@
     color: #330;
     border-radius: 6px;
     font-size: 1.4rem;
+    min-width: 320px;
   }

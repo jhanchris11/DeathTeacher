@@ -1,3 +1,7 @@
 export const SET_MESSAGE_LIST = 'SET_MESSAGE_LIST'
 export const SET_DISABLE = 'SET_DISABLE'
-
+export const SET_INPUT = 'SET_INPUT'
+export const SET_BEGIN = 'SET_BEGIN'
+export const SET_FINISH = 'SET_FINISH'
+export const SET_FINISH_CLASS = 'SET_FINISH_CLASS'
+export const SET_CLASS_TEXT = 'SET_CLASS_TEXT'
