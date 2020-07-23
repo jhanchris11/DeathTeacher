@@ -197,3 +197,72 @@ html {
     font-size: 1.1rem;
   }
 }
+*{
+  padding: 0;
+  margin-top: 0;
+}
+body{
+
+  background-image: url(img/background.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.side{
+  height: 500px;
+  width: 300px;
+}
+.img img{
+  width: 55px;
+  margin-top: 20;
+}
+.user_pic{
+  width: 200px;
+}
+.login_box{
+  margin-left: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.register_box{
+  margin-left: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+form{
+  width: 360px;
+}
+form h2{
+  font-size: 2.9rem;
+  text-transform: uppercase;
+  margin: 15px 0;
+  color: #000;
+}
+.btn{
+  display: block;
+  width: 100%;
+  font-size: 20px;
+  background-image: linear-gradient(to right, #2f90e5, #4d9ee5, #6aa9e1);
+  background-size: 200%;
+  transition: .5s;
+  color: #fff;
+  margin-top: 10px;
+}
+.btn:hover{
+  background-position: right;
+  color: #fff;
+}
+.forget{
+  text-align: left;
+}
+@media screen and (max-width: 1200px){
+  form{
+    width: 350px;
+  }
+}
+@media screen and (max-width: 1000px){
+  .img{
+    display: none;
+  }
+}
