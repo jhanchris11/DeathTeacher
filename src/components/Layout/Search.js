@@ -23,7 +23,6 @@ const Search = () => {
   const handlerService = async (topic) => {
     getScrappingQuestion({ topic }).then(({ response }) => console.log(response))
     const { data } = await getTopicClass({ topic })
-    console.log(data['response']);
     setClassText(data['response'])
   }
 

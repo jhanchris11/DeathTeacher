@@ -25,7 +25,6 @@ const Topic = ({ topic }) => {
 
     useEffect(() => {
         if (classText !== null) {
-            console.log(classText);
             buildingCarousel(classText)
         }
     }, [classText])
