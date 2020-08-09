@@ -1,9 +1,7 @@
 
 import React from 'react'
-import { Layout, Avatar, Typography } from 'antd'
-import Search from './Search'
+import { Layout } from 'antd'
 import HeadMenu from './HeadMenu'
-const { Title } = Typography;
 const { Header } = Layout
 
 const HeaderSecundario = () => {

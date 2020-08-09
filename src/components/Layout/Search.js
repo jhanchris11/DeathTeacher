@@ -1,15 +1,18 @@
 import React, { useState, useContext } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import ContextMessage from "../../Context/ContextMessage";
-import { Button, Radio } from 'antd';
+import { Button } from 'antd';
+import { getTopicClass, getScrappingQuestion } from "../../services/BotService";
 
 const Search = () => {
   const [searchText, setSearchText] = useState("");
-  const { setSearchInput } = useContext(ContextMessage);
+  const { setSearchInput, setClassText } = useContext(ContextMessage);
 
   const handleSearchClick = e => {
     e.preventDefault();
     setSearchInput(searchText);
+    handlerService(searchText)
+
     setSearchText("");
   };
 
@@ -17,8 +20,14 @@ const Search = () => {
     setSearchText(e.target.value);
   };
 
+  const handlerService = async (topic) => {
+    getScrappingQuestion({ topic }).then(({ response }) => console.log(response))
+    const { response } = await getTopicClass({ topic })
+    setClassText(response)
+  }
+
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <div style={{ display: "flex", justifyContent: "space-between", padding:"15px" }}>
       <div className="Search-Box">
         <SearchOutlined />
         <input

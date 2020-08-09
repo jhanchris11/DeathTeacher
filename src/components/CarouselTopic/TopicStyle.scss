@@ -39,6 +39,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     .subTopic {
       .subTopicTitle {
         color: #21e6c1;
@@ -49,11 +50,19 @@
         color: whitesmoke;
       }
     }
+    
   }
   .rigthContainer {
     width: 20%;
   }
+  .boxClass{
+    margin-bottom: 25px;
+  }
+  .boxButton{
+    margin-right: 20px;
+  }
 }
+
 .beginClassButton {
   background: transparent;
   margin: auto;
@@ -62,3 +71,4 @@
   padding: 10px;
   cursor: pointer;
 }
+
