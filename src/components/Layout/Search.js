@@ -22,8 +22,9 @@ const Search = () => {
 
   const handlerService = async (topic) => {
     getScrappingQuestion({ topic }).then(({ response }) => console.log(response))
-    const { response } = await getTopicClass({ topic })
-    setClassText(response)
+    const { data } = await getTopicClass({ topic })
+    console.log(data['response']);
+    setClassText(data['response'])
   }
 
   return (
@@ -36,7 +37,7 @@ const Search = () => {
           className="Input-Search"
           value={searchText}
           onChange={updateState}
-        ></input>
+        ></input> 
       </div>
       <Button
         type="primary"

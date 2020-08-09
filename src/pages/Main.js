@@ -4,7 +4,7 @@ import FooterMain from "../components/Layout/Footer";
 import Breadcrumb from "../components/Layout/Content";
 import Stream from "../components/Stream/Stream";
 import Chat from "../components/Bot/Chat/Chat";
-import SearchT from "../components/Layout/Search";
+import Search from "../components/Layout/Search";
 import Topic from "../components/CarouselTopic/Topic";
 import ContextMessage from "../Context/ContextMessage";
 const { Content } = Layout;
@@ -21,7 +21,7 @@ const Main = () => {
       <Content className="cl-content">
         <Breadcrumb seccionBot={seccionBot} />
         <div className="cl-search">
-          <SearchT />
+          <Search />
         </div>
 
         {searchInput !== "" && (
