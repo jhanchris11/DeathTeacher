@@ -48,6 +48,7 @@ const Topic = ({ topic }) => {
     const buildingCarousel = (text) => {
         let subTopics = [];
         let topicJson = text;
+        console.log(text);
         Object.keys(topicJson).map(slider => {
             let tempArray = separateSlider(topicJson[slider]);
             tempArray.length > 0
