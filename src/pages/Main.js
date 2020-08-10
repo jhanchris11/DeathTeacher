@@ -8,6 +8,7 @@ import Search from "../components/Layout/Search";
 import Topic from "../components/CarouselTopic/Topic";
 import ContextMessage from "../Context/ContextMessage";
 const { Content } = Layout;
+
 const Main = () => {
   const [seccionBot] = useState("Bot");
   const { searchInput } = useContext(ContextMessage);

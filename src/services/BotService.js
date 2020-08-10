@@ -9,3 +9,7 @@ export const getTopicClass = async (question) => {
 export const getScrappingQuestion = async (question) => {
     return await axios.post('/death-teachers/food', question)
 }
+
+export const uploadVideo = async (blobVideoRequest) => {
+    return await axios.post('/death-teachers/event', blobVideoRequest)
+}
