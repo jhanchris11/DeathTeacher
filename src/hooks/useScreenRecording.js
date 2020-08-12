@@ -28,6 +28,8 @@ const useScreenRecording = () => {
     canvasWidth,
     canvasHeigth
   ) => {
+    canvasElementRef.current.width = 1500;
+    canvasElementRef.current.height = 500;
     canvasElementRef.current
       .getContext("2d")
       .drawImage(
@@ -111,8 +113,14 @@ const useScreenRecording = () => {
       <Fragment>
         <canvas
           ref={canvasElementRef}
+          style={{ display: "none" }}
         ></canvas>
-        <video ref={mediaElementRef} autoPlay playsInline></video>
+        <video
+          style={{ display: "none" }}
+          ref={mediaElementRef}
+          autoPlay
+          playsInline
+        ></video>
       </Fragment>
     );
   };

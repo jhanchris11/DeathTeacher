@@ -16,20 +16,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./TopicStyle.scss";
 
-import useScreenRecording from "../../hooks/useScreenRecording";
-
-const Topic = ({ topic }) => {
+const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording }) => {
   var slider;
   const classContainer = useRef();
   const [carouselSubTopics, setSubTopics] = useState([]);
   const [beginClass, setBeginClass] = useState("aboveOfSliders");
   const { setFinishClass, classText } = useContext(ContextMessage);
-  const {
-    blobVideoState,
-    ScreenRecording,
-    handleStartRecording,
-    handleStopRecording
-  } = useScreenRecording();
 
   const settings = {
     dots: false,
@@ -38,19 +30,6 @@ const Topic = ({ topic }) => {
     slidesToShow: 1,
     slidesToScroll: 1
   };
-
-  useEffect(() => {
-    handleStartRecording(
-      classContainer.current.getBoundingClientRect().x,
-      classContainer.current.getBoundingClientRect().y,
-      classContainer.current.getBoundingClientRect().width,
-      classContainer.current.getBoundingClientRect().height,
-      0,
-      0,
-      classContainer.current.getBoundingClientRect().width,
-      classContainer.current.getBoundingClientRect().height
-    );
-  }, []);
 
   useEffect(() => {
     if (classText !== null) {
@@ -71,8 +50,17 @@ const Topic = ({ topic }) => {
   }
 
   function handleSpeech() {
-    handleStopRecording();
-    //setBeginClass("belowOfSliders");
+    handleStartRecordingEvent(
+      classContainer.current.getBoundingClientRect().x,
+      classContainer.current.getBoundingClientRect().y + 70,
+      classContainer.current.getBoundingClientRect().width,
+      classContainer.current.getBoundingClientRect().height,
+      0,
+      0,
+      1500,
+      500
+    );
+    setBeginClass("belowOfSliders");
   }
 
   const buildingCarousel = text => {
@@ -103,6 +91,7 @@ const Topic = ({ topic }) => {
   };
 
   const handlerPauseClass = () => {
+    handleStopRecording();
     window.speechSynthesis.pause();
   };
   const handlerContinuoClass = () => {
@@ -110,47 +99,45 @@ const Topic = ({ topic }) => {
   };
   return (
     <Fragment>
-      <ScreenRecording />
-      <h3 className="topicTitle">La clase de hoy es sobre : {topic}</h3>
-      {classText !== null && (
-        <div className="box-slider" id="classContainer">
-          <Fragment>
-            <div className="leftContainer">
-              <Slider ref={c => (slider = c)} {...settings}>
-                {carouselSubTopics &&
-                  carouselSubTopics.map(slider => (
-                    <div className="subTopic">
-                      <h3 className="subTopicTitle">{slider.title}</h3>
-                      <p className="sutbopicContent">{slider.content}</p>
-                    </div>
-                  ))}
-              </Slider>
-              <div className="boxClass">
-                <button
-                  className="beginClassButton boxButton"
-                  onClick={handlerContinuoClass}
-                >
-                  Continuar con la Clase
-                </button>
-                <button
-                  className="beginClassButton"
-                  onClick={handlerPauseClass}
-                >
-                  Pausar Clase
-                </button>
+      <div ref={classContainer}>
+        <h3 className="topicTitle">La clase de hoy es sobre : {topic}</h3>
+        {classText !== null && (
+          <div className="box-slider" id="classContainer">
+            <Fragment>
+              <div className="leftContainer">
+                <Slider ref={c => (slider = c)} {...settings}>
+                  {carouselSubTopics &&
+                    carouselSubTopics.map(slider => (
+                      <div className="subTopic">
+                        <h3 className="subTopicTitle">{slider.title}</h3>
+                        <p className="sutbopicContent">{slider.content}</p>
+                      </div>
+                    ))}
+                </Slider>
+                <div className="boxClass">
+                  <button
+                    className="beginClassButton boxButton"
+                    onClick={handlerContinuoClass}
+                  >
+                    Continuar con la Clase
+                  </button>
+                  <button
+                    className="beginClassButton"
+                    onClick={handlerPauseClass}
+                  >
+                    Pausar Clase
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="rigthContainer">
-              <Stream />
-            </div>
-          </Fragment>
-        </div>
-      )}
+              <div className="rigthContainer">
+                <Stream />
+              </div>
+            </Fragment>
+          </div>
+        )}
+      </div>
 
-      <div
-        className={`customSlider box-slider ${beginClass}`}
-        ref={classContainer}
-      >
+      <div className={`customSlider box-slider ${beginClass}`}>
         <button className="beginClassButton" onClick={handleSpeech}>
           Empezar clase
         </button>
