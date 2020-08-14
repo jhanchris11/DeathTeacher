@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
 import './ChatForm.css'
-import { teacherBot } from '../../../services/BotService'
-import { dateNow } from '../../../Helpers/DateNow'
+import { teacherBot } from '../../../services/botService'
+import { dateNow } from '../../../helpers/dateHelper'
 import { v4 as uuidv4 } from 'uuid';
-import ContextMessage from '../../../Context/ContextMessage';
-import { speechTextSlider } from '../../../Helpers/speechHelper';
+import messageBotContext from '../../../context/messageBot/messageBotContext';
+import { speechTextSlider } from '../../../helpers/speechHelper';
 
 const ChatForm = () => {
 
@@ -12,7 +12,7 @@ const ChatForm = () => {
         question: '',
     })
 
-    const { messageList, setMessageList, disableBot, setDisable, beginAudio, finishAudio, setBeginAudio, setFinishAudio } = useContext(ContextMessage)
+    const { messageList, setMessageList, disableBot, setDisable, beginAudio, finishAudio, setBeginAudio, setFinishAudio } = useContext(messageBotContext);
 
     useEffect(() => {
         if (disableBot === false) {

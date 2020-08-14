@@ -5,3 +5,6 @@ export const SET_BEGIN = 'SET_BEGIN'
 export const SET_FINISH = 'SET_FINISH'
 export const SET_FINISH_CLASS = 'SET_FINISH_CLASS'
 export const SET_CLASS_TEXT = 'SET_CLASS_TEXT'
+export const SET_PROFESSOR = 'SET_PROFESSOR'
+export const SET_LOADING = 'SET_LOADING'
+

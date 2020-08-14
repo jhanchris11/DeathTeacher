@@ -1,18 +1,22 @@
 import React, { useState, useContext } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import ContextMessage from "../../Context/ContextMessage";
+import messageBotContext from "../../context/messageBot/messageBotContext";
 import { Button } from 'antd';
-import { getTopicClass, getScrappingQuestion } from "../../services/BotService";
+import { getTopicClass, getScrappingQuestion } from "../../services/botService";
+import contextSpinner from "../../context/spinner/spinnerContext";
+
+import './SearchStyle.scss';
 
 const Search = () => {
   const [searchText, setSearchText] = useState("");
-  const { setSearchInput, setClassText } = useContext(ContextMessage);
+  const { setSearchInput, setClassText } = useContext(messageBotContext);
+  const { setLoading } = useContext(contextSpinner);
 
   const handleSearchClick = e => {
     e.preventDefault();
     setSearchInput(searchText);
     handlerService(searchText)
-
+    setLoading(true);
     setSearchText("");
   };
 
@@ -39,6 +43,7 @@ const Search = () => {
         ></input> 
       </div>
       <Button
+        className="searchButton"
         type="primary"
         shape="round"
         icon={<SearchOutlined />}

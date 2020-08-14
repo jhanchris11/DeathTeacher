@@ -1,59 +1,71 @@
-import React, { useRef, useContext, useEffect } from 'react'
-import { Card } from 'antd';
-import ReactPlayer from 'react-player'
+import React, { useRef, useContext, useEffect, useState, Fragment } from "react";
+import { Card } from "antd";
+import ReactPlayer from "react-player";
 
-import ContextMessage from '../../Context/ContextMessage';
-
+import messageBotContext from "../../context/messageBot/messageBotContext";
+import profesorContext from "../../context/professor/profesorContext";
 
 const { Meta } = Card;
 
-
 const Stream = () => {
-    const { beginAudio, finishAudio } = useContext(ContextMessage)
-    const [play, setPlay] = React.useState(false)
+  const [play, setPlay] = useState(false);
+  const player = useRef(null);
+  const { professor } = useContext(profesorContext);
+  const { beginAudio, finishAudio } = useContext(messageBotContext);
 
-    useEffect(() => {
-        if (beginAudio) {
-            handlerPlayPause()
-        }
-    }, [beginAudio])
-
-    useEffect(() => {
-        if (finishAudio) {
-            handlerControls()
-            handlerStop()
-        }
-    }, [finishAudio])
-
-
-    const player = useRef(null);
-
-    const handlerPlayPause = () => {
-        setPlay(true)
+  useEffect(() => {
+    if (beginAudio) {
+      handlerPlayPause();
     }
-    const handlerStop = () => {
-        setPlay(false)
-    }
-    const handlerControls = () => {
-        player.current.seekTo(0);
-    }
+  }, [beginAudio]);
 
-    return (
+  useEffect(() => {
+    if (finishAudio) {
+      handlerControls();
+      handlerStop();
+    }
+  }, [finishAudio]);
+
+  const handlerPlayPause = () => {
+    setPlay(true);
+  };
+  const handlerStop = () => {
+    setPlay(false);
+  };
+  const handlerControls = () => {
+    player.current.seekTo(0);
+  };
+
+  return (
+    <Fragment>
+      {professor && (
         <div className="box-stream">
-            <div className="box-player">
-                <Card
-                    hoverable
-                    style={{ height: "100%", background: "#071e3d" }}
-                    cover={
-                        <ReactPlayer width='100%' height='100%' playing={play} loop={true} controls={false} url='https://storage.googleapis.com/cinetask.appspot.com/DeepFakeVideo_1594957777.mp4' ref={player} />
-                    }
-                >
-                    <Meta title="Chess professor" description="Chess World CampionShip" />
-                </Card>
-            </div>
+          <div className="box-player">
+            <Card
+              hoverable
+              style={{ height: "100%", background: "#071e3d" }}
+              cover={
+                <ReactPlayer
+                  width="100%"
+                  height="100%"
+                  playing={play}
+                  loop={true}
+                  controls={false}
+                  url={professor['urlVideo']}
+                  ref={player}
+                />
+              }
+            >
+              <Meta
+                title={professor['fullName']}
+                description={professor['additionalInformation'].filter(item => item.key == 'job')[0]['value']}
+              />
+            </Card>
+          </div>
         </div>
+      )}
+    </Fragment>
+  );
+};
 
-    )
-}
-
-export default Stream
+export default Stream;

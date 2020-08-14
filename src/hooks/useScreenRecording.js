@@ -2,10 +2,10 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import {
   getScreenStream,
   addStreamStopListener
-} from "../Helpers/recordScreen";
+} from "../helpers/recordScreenHelper";
 import RecordRTC from "recordrtc";
 
-import { uploadVideo } from "../services/BotService";
+import { uploadVideo } from "../services/botService";
 
 const useScreenRecording = () => {
   const mediaElementRef = useRef();
@@ -77,7 +77,7 @@ const useScreenRecording = () => {
       mediaElementRef.current.ontimeupdate();
 
       addStreamStopListener(screen, () => {
-        handleStopRecording();
+        handleStopRecording(null);
       });
 
       recorder = RecordRTC(canvasElementRef.current.captureStream(), {
@@ -87,12 +87,21 @@ const useScreenRecording = () => {
     });
   };
 
-  const handleStopRecording = async () => {
+  const handleStopRecording = async (request) => {
     recorder.stopRecording(async function() {
       let blob = recorder.getBlob();
 
       const formData = new FormData();
       formData.append("video", blob);
+      formData.append("title",request['title'])
+      formData.append("description",request['description'])
+      formData.append("urlImage",request['urlImage'])
+      formData.append("urlVideo",request['urlVideo'])
+      formData.append("urlEvent",request['urlEvent'])
+      formData.append("professor",request['professor'])
+      formData.append("releaseDate",request['releaseDate'])
+      formData.append("category",request['category'])
+
       let response = await uploadVideo(formData);
 
       setBlobVideo(blob);

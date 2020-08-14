@@ -7,21 +7,23 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import Slider from "react-slick";
-import { speechTextSlider } from "../../Helpers/speechHelper";
-import { separateSlider } from "../../Helpers/sliderHelper";
+import { speechTextSlider } from "../../helpers/speechHelper";
+import { separateSlider } from "../../helpers/sliderHelper";
 import Stream from "../Stream/Stream";
-import ContextMessage from "../../Context/ContextMessage";
+import messageBotContext from "../../context/messageBot/messageBotContext";
+import profesorContext from "../../context/professor/profesorContext";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./TopicStyle.scss";
 
-const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording }) => {
+const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categorySelected }) => {
   var slider;
   const classContainer = useRef();
   const [carouselSubTopics, setSubTopics] = useState([]);
   const [beginClass, setBeginClass] = useState("aboveOfSliders");
-  const { setFinishClass, classText } = useContext(ContextMessage);
+  const { finishClass , setFinishClass, classText } = useContext(messageBotContext);
+  const { professor } = useContext(profesorContext);
 
   const settings = {
     dots: false,
@@ -38,7 +40,7 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording }) => {
   }, [classText]);
 
   useEffect(() => {
-    handleSliders();
+    !finishClass && handleSliders();
   }, [beginClass]);
 
   function next() {
@@ -61,6 +63,10 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording }) => {
       500
     );
     setBeginClass("belowOfSliders");
+  }
+
+  const handleBuildingRequest = () => {
+    return {title:topic,description:topic,category:categorySelected,professor:professor['_id'],urlImage: '',urlVideo:'',urlEvent:'',releaseDate:''};
   }
 
   const buildingCarousel = text => {
@@ -91,12 +97,18 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording }) => {
   };
 
   const handlerPauseClass = () => {
-    handleStopRecording();
     window.speechSynthesis.pause();
   };
   const handlerContinuoClass = () => {
     window.speechSynthesis.resume();
   };
+
+  const handlerFinishClass = () => {
+    window.speechSynthesis.pause();
+    handleStopRecording(handleBuildingRequest());
+    setFinishClass(true);
+  };
+
   return (
     <Fragment>
       <div ref={classContainer}>
@@ -122,10 +134,16 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording }) => {
                     Continuar con la Clase
                   </button>
                   <button
-                    className="beginClassButton"
+                    className="beginClassButton boxButton"
                     onClick={handlerPauseClass}
                   >
                     Pausar Clase
+                  </button>
+                  <button
+                    className="beginClassButton"
+                    onClick={handlerFinishClass}
+                  >
+                    Terminar Clase
                   </button>
                 </div>
               </div>

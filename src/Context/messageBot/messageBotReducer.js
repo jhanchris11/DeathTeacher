@@ -1,4 +1,4 @@
-import { SET_MESSAGE_LIST, SET_DISABLE, SET_INPUT, SET_BEGIN, SET_FINISH, SET_FINISH_CLASS, SET_CLASS_TEXT } from "./Type";
+import { SET_MESSAGE_LIST, SET_DISABLE, SET_INPUT, SET_BEGIN, SET_FINISH, SET_FINISH_CLASS, SET_CLASS_TEXT } from "../Type";
 
 export default (state, action) => {
   switch (action.type) {

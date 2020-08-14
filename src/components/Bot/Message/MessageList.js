@@ -1,12 +1,10 @@
 import React, { Fragment, useContext } from 'react'
 import './MessageList.css'
 import ChatForm from '../ChatForm/ChatForm'
-import ContextMessage from '../../../Context/ContextMessage'
-
+import messageBotContext from '../../../context/messageBot/messageBotContext';
 
 const MessageList = () => {
-
-    const { messageList } = useContext(ContextMessage)
+    const { messageList } = useContext(messageBotContext);
     return (
         <Fragment>
             <ChatForm />
@@ -27,4 +25,4 @@ const MessageList = () => {
     )
 }
 
-export default MessageList
+export default MessageList;

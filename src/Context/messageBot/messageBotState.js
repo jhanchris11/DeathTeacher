@@ -1,13 +1,11 @@
-
-import React, { useReducer } from 'react'
-import contextMessage from './ContextMessage'
-import reducerMessage from './MessageReducer'
+import React, { useReducer } from 'react';
+import messageBotContext from './messageBotContext'
+import messageBotReducer from './messageBotReducer'
 import { v4 as uuidv4 } from 'uuid'
-import { SET_MESSAGE_LIST, SET_DISABLE, SET_INPUT, SET_BEGIN, SET_FINISH, SET_FINISH_CLASS,SET_CLASS_TEXT } from './Type';
-import { dateNow } from '../Helpers/DateNow';
+import { SET_MESSAGE_LIST, SET_DISABLE, SET_INPUT, SET_BEGIN, SET_FINISH, SET_FINISH_CLASS,SET_CLASS_TEXT } from '../Type';
+import { dateNow } from  "../../helpers/dateHelper";
 
-/*State global , no va a cambiar , almacenar la data del estado */
-function MessageState(props) {
+function MessageBotState(props) {
 
     const initialState = {
 
@@ -26,7 +24,7 @@ function MessageState(props) {
         classText: null
     }
 
-    const [state, dispatch] = useReducer(reducerMessage, initialState);
+    const [state, dispatch] = useReducer(messageBotReducer, initialState);
 
     const setMessageList = messageList => {
         dispatch({
@@ -75,7 +73,7 @@ function MessageState(props) {
 
 
     return (
-        <contextMessage.Provider
+        <messageBotContext.Provider
             value={{
                 messageList: state.messageList,
                 setMessageList,
@@ -94,8 +92,8 @@ function MessageState(props) {
             }}
         >
             {props.children}
-        </contextMessage.Provider>
+        </messageBotContext.Provider>
     );
 }
 
-export default MessageState
+export default MessageBotState;
