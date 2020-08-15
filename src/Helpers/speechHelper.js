@@ -4,6 +4,7 @@ export const speechTextSlider = async text => {
   msg.volume = 1;
   msg.rate = 1;
   msg.pitch = 0.8;
+  window.speechSynthesis.cancel();
   window.speechSynthesis.speak(msg);
   return new Promise(resolve => {
     msg.onend = resolve;

@@ -46,6 +46,7 @@ const Main = () => {
   useEffect(() => {
     window.speechSynthesis.cancel();
     toggleModal();
+    localStorage.setItem('chatBot','0');
   }, []);
 
   useEffect(() => {

@@ -17,13 +17,21 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./SliderClass.scss";
 
-const SliderClass = ({ topic, handleStartRecordingEvent, handleStopRecording,categorySelected,toggleModal2 }) => {
+const SliderClass = ({
+  topic,
+  handleStartRecordingEvent,
+  handleStopRecording,
+  categorySelected,
+  toggleModal2
+}) => {
   const slider = useRef();
   const classContainer = useRef();
   const childRef = useRef();
   const [carouselSubTopics, setSubTopics] = useState([]);
   const [beginClass, setBeginClass] = useState("aboveOfSliders");
-  const { finishClass , classText,setBeginAudio, setFinishAudio } = useContext(messageBotContext);
+  const { finishClass, classText, setFinishClass } = useContext(
+    messageBotContext
+  );
   const { professor } = useContext(profesorContext);
 
   const settings = {
@@ -45,11 +53,13 @@ const SliderClass = ({ topic, handleStartRecordingEvent, handleStopRecording,cat
   }, [beginClass]);
 
   function next() {
-    slider.current.slickNext();
+    if(localStorage.getItem('chatBot') === '0'){
+      slider.current.slickNext();
+    }
   }
 
   function previous() {
-    slider.current.slickPrev();
+    !finishClass && slider.current.slickPrev();
   }
 
   function handleSpeech() {
@@ -68,8 +78,17 @@ const SliderClass = ({ topic, handleStartRecordingEvent, handleStopRecording,cat
   }
 
   const handleBuildingRequest = () => {
-    return {title:topic,description:topic,category:categorySelected,professor:professor['_id'],urlImage: '',urlVideo:'',urlEvent:'',releaseDate:''};
-  }
+    return {
+      title: topic,
+      description: topic,
+      category: categorySelected,
+      professor: professor["_id"],
+      urlImage: "",
+      urlVideo: "",
+      urlEvent: "",
+      releaseDate: ""
+    };
+  };
 
   const buildingCarousel = text => {
     let subTopics = [];
@@ -88,13 +107,14 @@ const SliderClass = ({ topic, handleStartRecordingEvent, handleStopRecording,cat
   const handleSliders = async () => {
     let c = 0;
     for (let subtopic of carouselSubTopics) {
-      await speechTextSlider(subtopic.content);
-      window.speechSynthesis.cancel();
-      next();
-      if (carouselSubTopics.length === c + 1) {
-        toggleModal2();
+      if (localStorage.getItem('chatBot') === '0') {
+        await speechTextSlider(subtopic.content);
+        next();
+        if (carouselSubTopics.length === c + 1) {
+          toggleModal2();
+        }
+        c++;
       }
-      c++;
     }
   };
 
@@ -108,10 +128,9 @@ const SliderClass = ({ topic, handleStartRecordingEvent, handleStopRecording,cat
   };
 
   const handlerFinishClass = () => {
-    window.speechSynthesis.pause();
-    window.speechSynthesis.cancel();
-    handleStopRecording(handleBuildingRequest());
-    toggleModal2();
+      setFinishClass(true);
+      handleStopRecording(handleBuildingRequest());
+      toggleModal2();
   };
 
   return (
@@ -153,7 +172,7 @@ const SliderClass = ({ topic, handleStartRecordingEvent, handleStopRecording,cat
                 </div>
               </div>
               <div className="rigthContainer">
-                <Stream ref={childRef}/>
+                <Stream ref={childRef} />
               </div>
             </Fragment>
           </div>

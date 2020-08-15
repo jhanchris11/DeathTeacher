@@ -31,6 +31,7 @@ const ChatForm = () => {
   }, [messageList]);
 
   let getMessageOfBot = async () => {
+    localStorage.setItem('chatBot','1');
     const { data } = await teacherBot(description);
     setDescription({
       question: ""
