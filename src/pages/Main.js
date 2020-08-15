@@ -25,7 +25,7 @@ const { Content } = Layout;
 const Main = () => {
   const childRef = useRef();
   const [categorySelected, setCategorySelected] = useState(null);
-  const { searchInput, finishClass, classText } = useContext(messageBotContext);
+  const { searchInput, finishClass, classText, beginAudio, finishAudio,setBeginAudio,setFinishAudio } = useContext(messageBotContext);
   const { setProfessor } = useContext(profesorContext);
   const { setLoading } = useContext(spinnerContext);
 
@@ -56,9 +56,30 @@ const Main = () => {
     classText != null && setLoading(false);
   }, [classText]);
 
+  useEffect(() => {
+    if (beginAudio) {
+      handlerPlayVideo();
+      setBeginAudio(false);
+    }
+  }, [beginAudio]);
+
+  useEffect(() => {
+    if (finishAudio) {
+      handlerPauseAndRestartVideo();
+      setFinishAudio(false);
+    }
+  }, [finishAudio]);
+
   const handleGetProfessor = async () => {
     let { data } = await getProfessorByCategoryId(categorySelected);
     setProfessor(data["professor"]);
+  };
+
+  const handlerPauseAndRestartVideo = () => {
+    childRef.current.handlerStopVideo();
+  };
+  const handlerPlayVideo = () => {
+    childRef.current.handlerPlayPause();
   };
 
   const handleStartRecordingEvent = (
@@ -137,7 +158,7 @@ const Main = () => {
             <div className="cl-content-bg" style={{ marginTop: 30 }}>
               <div className="contendor-stream" style={{ width: "30%" }}>
                 <p style={{textAlign: "left",fontWeight: "bold", fontSize: "1.5em", fontFamily: "'Indie Flower', cursive"}}>
-                  Talk with our teacher about  your dudes
+                  Habla con nuestro profesor acerca de tus dudas
                 </p>
                 <Divider />
                 <Stream  ref={childRef}/>

@@ -11,6 +11,7 @@ const Stream = forwardRef((props, ref) => {
   const [play, setPlay] = useState(false);
   const player = useRef(null);
   const { professor } = useContext(profesorContext);
+
   useImperativeHandle(ref, () => ({
      handlerStopVideo  ()  {
       handlerControls();

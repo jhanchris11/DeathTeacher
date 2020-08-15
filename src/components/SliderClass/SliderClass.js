@@ -109,6 +109,7 @@ const SliderClass = ({ topic, handleStartRecordingEvent, handleStopRecording,cat
 
   const handlerFinishClass = () => {
     window.speechSynthesis.pause();
+    window.speechSynthesis.cancel();
     handleStopRecording(handleBuildingRequest());
     toggleModal2();
   };

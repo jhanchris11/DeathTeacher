@@ -9,7 +9,6 @@ const Chat = () => {
         <div id='chat-container'>
             <ChatTitle />
             <MessageList />
-            
         </div>
     )
 }
