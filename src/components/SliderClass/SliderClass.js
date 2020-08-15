@@ -15,14 +15,15 @@ import profesorContext from "../../context/professor/profesorContext";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./TopicStyle.scss";
+import "./SliderClass.scss";
 
-const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categorySelected }) => {
-  var slider;
+const SliderClass = ({ topic, handleStartRecordingEvent, handleStopRecording,categorySelected,toggleModal2 }) => {
+  const slider = useRef();
   const classContainer = useRef();
+  const childRef = useRef();
   const [carouselSubTopics, setSubTopics] = useState([]);
   const [beginClass, setBeginClass] = useState("aboveOfSliders");
-  const { finishClass , setFinishClass, classText } = useContext(messageBotContext);
+  const { finishClass , classText,setBeginAudio, setFinishAudio } = useContext(messageBotContext);
   const { professor } = useContext(profesorContext);
 
   const settings = {
@@ -44,11 +45,11 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categoryS
   }, [beginClass]);
 
   function next() {
-    slider.slickNext();
+    slider.current.slickNext();
   }
 
   function previous() {
-    slider.slickPrev();
+    slider.current.slickPrev();
   }
 
   function handleSpeech() {
@@ -63,6 +64,7 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categoryS
       500
     );
     setBeginClass("belowOfSliders");
+    childRef.current.handlerPlayPause();
   }
 
   const handleBuildingRequest = () => {
@@ -72,13 +74,13 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categoryS
   const buildingCarousel = text => {
     let subTopics = [];
     let topicJson = text;
-    Object.keys(topicJson).map(slider => {
-      let tempArray = separateSlider(topicJson[slider]);
+    Object.keys(topicJson).map(sliderItem => {
+      let tempArray = separateSlider(topicJson[sliderItem]);
       tempArray.length > 0
         ? tempArray.map(text => {
-            subTopics.push({ title: slider, content: text });
+            subTopics.push({ title: sliderItem, content: text });
           })
-        : subTopics.push({ title: slider, content: topicJson[slider] });
+        : subTopics.push({ title: sliderItem, content: topicJson[sliderItem] });
     });
     setSubTopics(subTopics);
   };
@@ -90,7 +92,7 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categoryS
       window.speechSynthesis.cancel();
       next();
       if (carouselSubTopics.length === c + 1) {
-        setFinishClass(true);
+        toggleModal2();
       }
       c++;
     }
@@ -98,15 +100,17 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categoryS
 
   const handlerPauseClass = () => {
     window.speechSynthesis.pause();
+    childRef.current.handlerStopVideo();
   };
   const handlerContinuoClass = () => {
     window.speechSynthesis.resume();
+    childRef.current.handlerPlayPause();
   };
 
   const handlerFinishClass = () => {
     window.speechSynthesis.pause();
     handleStopRecording(handleBuildingRequest());
-    setFinishClass(true);
+    toggleModal2();
   };
 
   return (
@@ -117,12 +121,12 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categoryS
           <div className="box-slider" id="classContainer">
             <Fragment>
               <div className="leftContainer">
-                <Slider ref={c => (slider = c)} {...settings}>
+                <Slider ref={slider} {...settings}>
                   {carouselSubTopics &&
-                    carouselSubTopics.map(slider => (
+                    carouselSubTopics.map(sliderTopic => (
                       <div className="subTopic">
-                        <h3 className="subTopicTitle">{slider.title}</h3>
-                        <p className="sutbopicContent">{slider.content}</p>
+                        <h3 className="subTopicTitle">{sliderTopic.title}</h3>
+                        <p className="sutbopicContent">{sliderTopic.content}</p>
                       </div>
                     ))}
                 </Slider>
@@ -148,7 +152,7 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categoryS
                 </div>
               </div>
               <div className="rigthContainer">
-                <Stream />
+                <Stream ref={childRef}/>
               </div>
             </Fragment>
           </div>
@@ -164,4 +168,4 @@ const Topic = ({ topic, handleStartRecordingEvent, handleStopRecording,categoryS
   );
 };
 
-export default Topic;
+export default SliderClass;

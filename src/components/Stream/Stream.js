@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect, useState, Fragment } from "react";
+import React, { useRef, useContext, useEffect, useState, Fragment, forwardRef, useImperativeHandle } from "react";
 import { Card } from "antd";
 import ReactPlayer from "react-player";
 
@@ -7,28 +7,20 @@ import profesorContext from "../../context/professor/profesorContext";
 
 const { Meta } = Card;
 
-const Stream = () => {
+const Stream = forwardRef((props, ref) => {
   const [play, setPlay] = useState(false);
   const player = useRef(null);
   const { professor } = useContext(profesorContext);
-  const { beginAudio, finishAudio } = useContext(messageBotContext);
-
-  useEffect(() => {
-    if (beginAudio) {
-      handlerPlayPause();
-    }
-  }, [beginAudio]);
-
-  useEffect(() => {
-    if (finishAudio) {
+  useImperativeHandle(ref, () => ({
+     handlerStopVideo  ()  {
       handlerControls();
       handlerStop();
+    },
+    handlerPlayPause () {
+      setPlay(true);
     }
-  }, [finishAudio]);
+  }));
 
-  const handlerPlayPause = () => {
-    setPlay(true);
-  };
   const handlerStop = () => {
     setPlay(false);
   };
@@ -66,6 +58,6 @@ const Stream = () => {
       )}
     </Fragment>
   );
-};
+});
 
 export default Stream;

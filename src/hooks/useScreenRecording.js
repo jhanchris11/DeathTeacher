@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState, useContext } from "react";
 import {
   getScreenStream,
   addStreamStopListener
@@ -8,10 +8,10 @@ import RecordRTC from "recordrtc";
 import { uploadVideo } from "../services/botService";
 
 const useScreenRecording = () => {
+  var recorder;
   const mediaElementRef = useRef();
   const canvasElementRef = useRef();
   const [blobVideoState, setBlobVideo] = useState(null);
-  var recorder;
 
   useEffect(() => {
     mediaElementRef.current.style.display = "none";
